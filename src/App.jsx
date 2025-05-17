@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TimeInput from "./Components/TimeInput";
 import Timer from "./Components/Timer";
-import "./App.css";
-import WorkHistory from "./Components/WorkHistory";
+import SessionGraph from "./Components/SessionGraph";
 import Todo from "./Components/Todo";
-
+import ModeHeader from "./Components/ModeHeader";
+import "./App.css";
 
 function App() {
   const [duration, setDuration] = useState(0);
@@ -16,24 +16,29 @@ function App() {
     setIsStarted(true);
   };
 
+  const handleComplete = () => {
+    setIsStarted(false);
+  };
+
   return (
     <div className="app">
       <div className="theme-picker">
-        <label>you can pick any color if you want</label>
+        <label>Pick a color for the theme:</label>
         <input
           type="color"
           value={themeColor}
           onChange={(e) => setThemeColor(e.target.value)}
         />
       </div>
+
       {!isStarted ? (
         <TimeInput onStart={handleStart} />
       ) : (
-        <Timer duration={duration} themeColor={themeColor} />
+        <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} />
       )}
-      <WorkHistory />
-      <Todo />
 
+      <SessionGraph themeColor={themeColor} />
+      <Todo themeColor={themeColor} />
     </div>
   );
 }

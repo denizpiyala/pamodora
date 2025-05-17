@@ -1,28 +1,30 @@
 import React, { useState } from "react";
 
 const TimeInput = ({ onStart }) => {
-  const [minutes, setMinutes] = useState("");
+  const [minutes, setMinutes] = useState(25);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (minutes > 0) {
-      onStart(parseInt(minutes));
+  const handleChange = (e) => {
+    setMinutes(e.target.value);
+  };
+
+  const handleStart = () => {
+    const parsedMinutes = parseInt(minutes);
+    if (!isNaN(parsedMinutes) && parsedMinutes > 0) {
+      onStart(parsedMinutes);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="time-input">
-      <h2>Ne kadar çalışmak istiyorsun?</h2>
+    <div className="time-input">
       <input
         type="number"
         value={minutes}
-        onChange={(e) => setMinutes(e.target.value)}
-        placeholder="Dakika gir..."
-        required
+        onChange={handleChange}
+        min="1"
+        placeholder="Enter minutes"
       />
-      <button type="submit">Başla</button>
-      <img src="/WORK.gif" alt="coffee" style={{ width: "100px", marginTop: "20px" }} />
-    </form>
+      <button onClick={handleStart}>Start Timer</button>
+    </div>
   );
 };
 

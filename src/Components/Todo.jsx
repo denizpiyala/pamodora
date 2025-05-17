@@ -1,42 +1,46 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-const Todo = () => {
-    const [task , setTask] = useState("");
-    const [todoList , setTodoList] = useState([]);
+const Todo = ({ themeColor }) => {
+  const [tasks, setTasks] = useState([]);
+  const [taskInput, setTaskInput] = useState("");
 
-    const addTask = () => {
-        if (!task.trim()) return;
-        setTodoList([...todoList, task]);
-        setTask("");
-    };
-    const removeTask = (index) => {
-        const newList = [...todoList];
-        newList.splice(index, 1);
-        setTodoList(newList);
-};
+  const addTask = () => {
+    if (taskInput.trim()) {
+      setTasks([...tasks, { text: taskInput, completed: false }]);
+      setTaskInput("");
+    }
+  };
 
-return (
-    <div className="todo-container">
-        <h2>To Do List</h2>
-        <div className="input-group">
-            <input
-            type="text"
-            value={task}
-            onChange={(e) => setTask(e.target.value)}
-            placeholder="Yeni görev ekle..."
-            />
-            <button onClick={addTask}>Ekle</button>
-        </div>
-        <ul>
-            {todoList.map((t, index) => (
-                <li key={index}>
-                    {t}
-                    <button onClick={() => removeTask(index)}>Sil</button>
-                </li>
-            ))}
-        </ul>
+  const toggleTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].completed = !updatedTasks[index].completed;
+    setTasks(updatedTasks);
+  };
 
+  return (
+    <div className="todo" style={{ borderColor: themeColor }}>
+      <h3>Todo List</h3>
+      <input
+        type="text"
+        value={taskInput}
+        onChange={(e) => setTaskInput(e.target.value)}
+        placeholder="Add a task"
+      />
+      <button onClick={addTask} style={{ backgroundColor: themeColor }}>Add</button>
+
+      <ul>
+        {tasks.map((task, index) => (
+          <li
+            key={index}
+            style={{ textDecoration: task.completed ? "line-through" : "none" }}
+            onClick={() => toggleTask(index)}
+          >
+            {task.text}
+          </li>
+        ))}
+      </ul>
     </div>
-);
+  );
 };
+
 export default Todo;
