@@ -4,7 +4,21 @@ body {
   background-color: #f9f9ff;
   margin: 0;
   padding: 0;
+  transition: background-color 0.3s color 0.3s
 }
+
+.app.light {
+  background-color: #f9f9ff;
+  color: #333;
+
+}
+
+.app.dark {
+  background-color: #121212;
+  color: #fff;
+
+}
+
 
 .app {
   display: flex;
@@ -29,8 +43,25 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
-
+button:hover {
+  background-color: #4caf50;
+}
+.theme-picker {
+  margin-bottom: 20px;
+}
+.todo {
+  width: 300px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 2px solid #4caf50;
+  border-radius: 8px;
+}
+.todo.dark {
+  background-color: #333;
+}
 .timer {
   display: flex;
   flex-direction: column;
@@ -77,10 +108,28 @@ li {
   display: flex;
   justify-content: space-between;
 }
+li:hover {
+  background: #e0e0e0;
+}
+li.dark {
+  background: #444;
+}
 
 .timer {
   margin-top: 20px;
   background: #f9f9f9;
   padding: 1rem;
   border-radius: 8px;
+}
+.timer-graph-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.timer-section , graph-section {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
 }

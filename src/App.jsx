@@ -10,18 +10,23 @@ function App() {
   const [duration, setDuration] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
   const [themeColor, setThemeColor] = useState("#4CAF50");
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleStart = (minutes) => {
     setDuration(minutes * 60);
     setIsStarted(true);
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => !prev);
+  }
+
   const handleComplete = () => {
     setIsStarted(false);
   };
 
   return (
-    <div className="app">
+    <div className={`app ${darkMode ? "dark" : "light"}`}>
       <div className="theme-picker">
         <label>Pick a color for the theme:</label>
         <input
@@ -29,15 +34,20 @@ function App() {
           value={themeColor}
           onChange={(e) => setThemeColor(e.target.value)}
         />
+        <button onClick={toggleDarkMode}>
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </button>
       </div>
 
-      {!isStarted ? (
-        <TimeInput onStart={handleStart} />
-      ) : (
-        <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} />
-      )}
+     <div className="timer-graph-container">
+        {!isStarted ? (
+          <TimeInput onStart={handleStart} />
+        ) : (
+          <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} />
+        )}
+        <SessionGraph themeColor={themeColor} />
+      </div>
 
-      <SessionGraph themeColor={themeColor} />
       <Todo themeColor={themeColor} />
     </div>
   );
