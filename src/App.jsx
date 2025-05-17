@@ -3,10 +3,10 @@ import TimeInput from "./Components/TimeInput";
 import Timer from "./Components/Timer";
 import SessionGraph from "./Components/SessionGraph";
 import Todo from "./Components/Todo";
+import ModeHeader from "./Components/ModeHeader";
 import Login from "./Components/Login";
-import Register from "./Components/Register";
-import { auth } from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "./firebase";
 import "./App.css";
 
 function App() {
@@ -16,71 +16,48 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [user, setUser] = useState(null);
 
-   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => setUser(user));
   }, []);
-  if (!user) {
-    return (
-      <div className="auth-container">
-        <Login onLogin={() => setUser(auth.currentUser)} />
-        <Register onRegister={() => setUser(auth.currentUser)} />
-      </div>
-    );
-  }
 
-  const handleLogout = () => {
-    signOut(auth);
-  };
+  const handleLogout = () => signOut(auth);
 
   const handleStart = (minutes) => {
     setDuration(minutes * 60);
     setIsStarted(true);
   };
 
-  const handleComplete = async () => {
-    setIsStarted(false);
-    if (user) {
-      await setDoc(doc(db, "users", user.uid, "sessions", new Date().toISOString()), {
-        duration,
-        completedAt: new Date().toISOString(),
-      });
-    }
-  };
+  const handleComplete = () => setIsStarted(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   return (
     <div className={`app ${darkMode ? "dark" : "light"}`}>
-      <div className="theme-picker">
-        <label>Pick a color for the theme:</label>
-        <input
-          type="color"
-          value={themeColor}
-          onChange={(e) => setThemeColor(e.target.value)}
-        />
-        <button onClick={toggleDarkMode}>
-          {darkMode ? "Light Mode" : "Dark Mode"}
-        </button>
-        {user ? <button onClick={handleLogout}>Logout</button> : "Please log in"}
-      </div>
+      <ModeHeader themeColor={themeColor} toggleDarkMode={toggleDarkMode} />
 
-      <div className="timer-graph-container">
-        {!isStarted ? (
-          <TimeInput onStart={handleStart} />
-        ) : (
-          <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} user={user} />
-        )}
-        <SessionGraph themeColor={themeColor} />
-      </div>
-
-      <Todo themeColor={themeColor} user={user} />
-      <ModeHeader />
+      {user ? (
+        <div className="main-container">
+          <div className="timer-section">
+            <h2>Zamanlayıcı</h2>
+            {!isStarted ? (
+              <TimeInput onStart={handleStart} />
+            ) : (
+              <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} />
+            )}
+          </div>
+          <div className="graph-section">
+            <h2>Oturum Grafiği</h2>
+            <SessionGraph themeColor={themeColor} user={user} />
+          </div>
+          <div className="todo-section">
+            <h2>Yapılacaklar Listesi</h2>
+            <Todo themeColor={themeColor} user={user} />
+          </div>
+          <button className="logout-btn" onClick={handleLogout}>Çıkış Yap</button>
+        </div>
+      ) : (
+        <Login />
+      )}
     </div>
   );
 }

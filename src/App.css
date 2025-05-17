@@ -157,3 +157,46 @@ li.dark {
   padding: 10px;
   cursor: pointer;
 }
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-container input {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.login-container button {
+  padding: 10px 15px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-container button:hover {
+  background-color: #45a049;
+}
+
+.login-container .toggle-link {
+  font-size: 0.9rem;
+  color: #4CAF50;
+  cursor: pointer;
+}
+
+.login-container .toggle-link:hover {
+  text-decoration: underline;
+}
