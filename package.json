@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "firebase": "^11.7.3",
     "react": "^19.1.0",
     "react-circular-progressbar": "^2.2.0",
     "react-dom": "^19.1.0",
+    "react-firebase-hooks": "^5.1.1",
     "recharts": "^2.15.3"
   },
   "devDependencies": {

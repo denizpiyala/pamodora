@@ -1,20 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { db, auth } from "../firebase";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
-const Todo = ({ themeColor }) => {
+const Todo = ({ themeColor, user }) => {
   const [tasks, setTasks] = useState([]);
   const [taskInput, setTaskInput] = useState("");
 
-  const addTask = () => {
-    if (taskInput.trim()) {
-      setTasks([...tasks, { text: taskInput, completed: false }]);
-      setTaskInput("");
+  useEffect(() => {
+    if (user) loadTasks();
+  }, [user]);
+
+  const loadTasks = async () => {
+    if (user) {
+      const docRef = doc(db, "users", user.uid, "tasks");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setTasks(docSnap.data().tasks || []);
+      }
     }
   };
 
-  const toggleTask = (index) => {
+  const addTask = async () => {
+    if (taskInput.trim() && user) {
+      const updatedTasks = [...tasks, { text: taskInput, completed: false }];
+      setTasks(updatedTasks);
+      setTaskInput("");
+      await setDoc(doc(db, "users", user.uid, "tasks"), { tasks: updatedTasks });
+    }
+  };
+
+  const toggleTask = async (index) => {
     const updatedTasks = [...tasks];
     updatedTasks[index].completed = !updatedTasks[index].completed;
     setTasks(updatedTasks);
+
+    if (user) {
+      await setDoc(doc(db, "users", user.uid, "tasks"), { tasks: updatedTasks });
+    }
   };
 
   return (
