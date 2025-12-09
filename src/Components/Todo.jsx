@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
 
 const Todo = ({ themeColor, user }) => {
   const [tasks, setTasks] = useState([]);

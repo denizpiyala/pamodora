@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+
 
 const Timer = ({ duration, themeColor, onComplete, user }) => {
   const [timeLeft, setTimeLeft] = useState(duration);
