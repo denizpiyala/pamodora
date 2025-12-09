@@ -1,0 +1,19 @@
+<!-- Pomodoro Logo 2: Progress Ring Tomato -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="512" height="512" role="img" aria-labelledby="title2 desc2">
+  <title id="title2">Pomodoro Progress Logo</title>
+  <desc id="desc2">Minimal tomato circle with a progress ring indicating a timer.</desc>
+  <!-- outer rounded square padding -->
+  <rect width="120" height="120" rx="18" fill="none"></rect>
+  <!-- progress ring background -->
+  <circle cx="60" cy="60" r="38" fill="none" stroke="#F2F2F2" stroke-width="10"></circle>
+  <!-- progress arc (example ~65%) -->
+  <path d="M98 60a38 38 0 1 1-76 0" fill="none" stroke="#E6423A" stroke-width="10" stroke-linecap="round" transform="rotate(-85 60 60)"></path>
+  <!-- inner tomato icon -->
+  <circle cx="60" cy="60" r="24" fill="#E6423A" stroke="#C8322E" stroke-width="2"></circle>
+  <!-- small leaf -->
+  <path d="M60 36 C66 40, 72 38, 70 34 C66 30, 62 30, 60 36 Z" fill="#2F8F4A"></path>
+  <!-- white minimal minute hand -->
+  <rect x="59" y="48" width="2" height="14" rx="1" fill="#fff"></rect>
+  <!-- tiny second tick -->
+  <circle cx="60" cy="60" r="2" fill="#fff"></circle>
+</svg>
