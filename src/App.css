@@ -10,15 +10,22 @@ body {
 .app.light {
   background-color: #f9f9ff;
   color: #333;
-
+  background-image: linear-gradient(rgba(249, 249, 255, 0.6), rgba(249, 249, 255, 0.6)), url('/public/unnamed.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .app.dark {
   background-color: #121212;
   color: #fff;
-
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/public/unnamed.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
-
 
 .app {
   display: flex;
@@ -45,12 +52,15 @@ button {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 button:hover {
   background-color: #4caf50;
 }
+
 .theme-picker {
   margin-bottom: 20px;
 }
+
 .todo {
   width: 300px;
   margin: 20px auto;
@@ -59,9 +69,11 @@ button:hover {
   border: 2px solid #4caf50;
   border-radius: 8px;
 }
+
 .todo.dark {
   background-color: #333;
 }
+
 .timer {
   display: flex;
   flex-direction: column;
@@ -76,7 +88,7 @@ button:hover {
   width: 300px;
   margin: 20px auto;
   text-align: center;
-  
+
 }
 
 .input-group {
@@ -108,9 +120,11 @@ li {
   display: flex;
   justify-content: space-between;
 }
+
 li:hover {
   background: #e0e0e0;
 }
+
 li.dark {
   background: #444;
 }
@@ -121,6 +135,7 @@ li.dark {
   padding: 1rem;
   border-radius: 8px;
 }
+
 .timer-graph-container {
   display: flex;
   gap: 20px;
@@ -128,11 +143,14 @@ li.dark {
   justify-content: center;
   flex-wrap: wrap;
 }
-.timer-section , graph-section {
+
+.timer-section,
+graph-section {
   flex: 1;
   min-width: 300px;
   max-width: 400px;
 }
+
 .auth-container {
   display: flex;
   flex-direction: column;
