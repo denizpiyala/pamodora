@@ -11,6 +11,7 @@ function App() {
   const [isStarted, setIsStarted] = useState(false);
   const [themeColor, setThemeColor] = useState("#4CAF50");
   const [darkMode, setDarkMode] = useState(false);
+  const [activeTab, setActiveTab] = useState("timer"); // "timer", "graph", "todo"
 
   const handleStart = (minutes) => {
     setDuration(minutes * 60);
@@ -23,29 +24,66 @@ function App() {
 
   return (
     <div className={`app ${darkMode ? "dark" : "light"}`}>
-      <ModeHeader themeColor={themeColor} toggleDarkMode={toggleDarkMode} />
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="nav-brand">🍅 Pomodoro</div>
+        <div className="nav-buttons">
+          <button 
+            className={`nav-btn ${activeTab === "timer" ? "active" : ""}`}
+            onClick={() => setActiveTab("timer")}
+          >
+            ⏱️ Zamanlayıcı
+          </button>
+          <button 
+            className={`nav-btn ${activeTab === "graph" ? "active" : ""}`}
+            onClick={() => setActiveTab("graph")}
+          >
+            📊 İstatistikler
+          </button>
+          <button 
+            className={`nav-btn ${activeTab === "todo" ? "active" : ""}`}
+            onClick={() => setActiveTab("todo")}
+          >
+            ✓ Görevler
+          </button>
+          <button 
+            className="nav-btn dark-mode-btn"
+            onClick={toggleDarkMode}
+          >
+            {darkMode ? "☀️" : "🌙"}
+          </button>
+        </div>
+      </nav>
 
-
+      {/* İçerik */}
       <div className="main-container">
-        <div className="timer-section">
-          <h2>Zamanlayıcı</h2>
-          {!isStarted ? (
-            <TimeInput onStart={handleStart} />
-          ) : (
-            <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} />
-          )}
-        </div>
-        <div className="graph-section">
-          <h2>Oturum Grafiği</h2>
-          <SessionGraph themeColor={themeColor}  />
-        </div>
-              <div className="todo-section">
-                <h2>Yapılacaklar Listesi</h2>
-                <Todo themeColor={themeColor} />
-              </div>
-            </div>
+        {activeTab === "timer" && (
+          <div className="tab-content">
+            <ModeHeader themeColor={themeColor} />
+            {!isStarted ? (
+              <TimeInput onStart={handleStart} />
+            ) : (
+              <Timer duration={duration} themeColor={themeColor} onComplete={handleComplete} />
+            )}
           </div>
-        );
-      }
-      
-      export default App;
+        )}
+
+        {activeTab === "graph" && (
+          <div className="tab-content">
+            <h2>Çalışma İstatistikleri</h2>
+            <SessionGraph themeColor={themeColor} />
+          </div>
+        )}
+
+        {activeTab === "todo" && (
+          <div className="tab-content">
+            <h2>Yapılacaklar Listesi</h2>
+            <Todo themeColor={themeColor} darkMode={darkMode} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default App;

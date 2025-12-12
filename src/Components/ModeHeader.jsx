@@ -1,17 +1,15 @@
 import React from "react";
 
-const ModeHeader = ({ mode, themeColor }) => {
-  const modeText = mode === "work" ? "Çalışma Süresi" : "Mola Süresi";
-  const modeEmoji = mode === "work" ? "💪" : "☕";
-
+const ModeHeader = ({ themeColor }) => {
   return (
     <div className="mode-header">
-      <h1 style={{ color: themeColor }}>
-        {modeEmoji} {modeText}
-      </h1>
+       <h1 style={{ color: themeColor }}>
+        🍅 Çalışma Zamanı
+      </h1><p style={{ fontSize: "14px", opacity: 0.7, marginTop: "5px" }}>Odaklan ve verimliliğini artır</p>
     </div>
   );
 };
 
-export default ModeHeader;
 
+
+export default ModeHeader;

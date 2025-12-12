@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-
-const Timer = ({ duration, themeColor, onComplete, user }) => {
+const Timer = ({ duration,themeColor, onComplete }) => {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   useEffect(() => {
@@ -13,40 +12,33 @@ const Timer = ({ duration, themeColor, onComplete, user }) => {
   useEffect(() => {
     if (timeLeft <= 0) {
       onComplete();
-      saveSession();
+      return;
     }
-
     const interval = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0 ));
+      
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timeLeft]);
 
-  const saveSession = async () => {
-    if (user) {
-      await setDoc(doc(db, "users", user.uid, "sessions", new Date().toISOString()), {
-        duration,
-        completedAt: new Date().toISOString()
-      });
-    }
-  };
+  },[timeLeft, onComplete]);
 
   const percentage = ((duration - timeLeft) / duration) * 100;
 
   return (
     <div className="timer">
       <CircularProgressbar
-        value={percentage}
-        text={`${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2, "0")}`}
-        styles={buildStyles({
-          textColor: "#333",
-          pathColor: themeColor,
-          trailColor: "#ddd",
-        })}
+      value={percentage}
+      text={`${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2,"0")}`}
+      styles={buildStyles({
+        textColor: "#333",
+        pathColor: themeColor,
+        trailColor: "#ddd",
+        textSize: "48px",
+      })}
       />
     </div>
   );
 };
 
-export default Timer;
+ export default Timer;
